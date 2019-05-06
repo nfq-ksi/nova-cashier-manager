@@ -75,6 +75,11 @@ class CashierToolController extends Controller
         // Get ALL subscriptions
         $formattedSubscriptions = [];
         foreach($subscriptions as $cur_subscription) {
+            if (!$cur_subscription->stripe_id) {
+                $formattedSubscriptions[] = $cur_subscription->toArray();
+                continue;
+            }
+
             $stripeSubscription = StripeSubscription::retrieve($cur_subscription->stripe_id);
             $formattedSubscriptions[] = $this->formatSubscription($cur_subscription, $stripeSubscription);
         }
