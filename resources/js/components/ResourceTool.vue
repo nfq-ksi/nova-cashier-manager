@@ -27,7 +27,7 @@
 
         methods: {
             loadUserData(){
-                axios.get(`/nova-cashier-tool-api/user/${this.resourceId}/subscriptions`)
+                Nova.request().get(`/nova-cashier-tool-api/user/${this.resourceId}/subscriptions`)
                 .then(response => {
                     this.user = response.data.user;
                     this.plans = response.data.plans;
@@ -40,7 +40,7 @@
                 this.loading = true;
 
                 if (this.plan) {
-                    axios.post('/nova-cashier-tool-api/user/'+this.resourceId+'/subscriptions/create', {plan: this.plan})
+                    Nova.request().post('/nova-cashier-tool-api/user/'+this.resourceId+'/subscriptions/create', {plan: this.plan})
                     .then(response => {
                         this.$toasted.show("Created successfully!", {type: "success"});
 

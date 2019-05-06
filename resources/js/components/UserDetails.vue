@@ -27,7 +27,7 @@
              * Load the user data.
              */
             loadUserData(){
-                axios.get('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId)
+                Nova.request().get('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId)
                         .then(response => {
                             this.user = response.data.user;
                             this.subscription = response.data.subscriptions[0];
@@ -51,7 +51,7 @@
                 if (do_refund == true) {
                     this.loading = true;
 
-                    axios.post(`/nova-cashier-tool-api/user/${this.userId}/refund/${chargeId}`)
+                    Nova.request().post(`/nova-cashier-tool-api/user/${this.userId}/refund/${chargeId}`)
                         .then(response => {
                             this.$toasted.show("Refunded successfully!", {type: "success"});
 
@@ -71,7 +71,7 @@
                 if (do_cancel == true) {
                     this.loading = true;
 
-                    axios.post('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId+'/cancel')
+                    Nova.request().post('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId+'/cancel')
                     .then(response => {
                         this.$toasted.show("Cancelled successfully!", {type: "success"});
 
@@ -90,7 +90,7 @@
             resumeSubscription(){
                 this.loading = true;
 
-                axios.post('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId+'/resume')
+                Nova.request().post('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId+'/resume')
                 .then(response => {
                     this.$toasted.show("Resumed successfully!", {type: "success"});
 
@@ -108,7 +108,7 @@
             updateSubscription(){
                 this.loading = true;
 
-                axios.post('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId+'/update', {plan: this.newPlan})
+                Nova.request().post('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId+'/update', {plan: this.newPlan})
                 .then(response => {
                     this.$toasted.show("Updated successfully!", {type: "success"});
 

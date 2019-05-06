@@ -665,7 +665,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         loadUserData: function loadUserData() {
             var _this = this;
 
-            axios.get('/nova-cashier-tool-api/user/' + this.resourceId + '/subscriptions').then(function (response) {
+            Nova.request().get('/nova-cashier-tool-api/user/' + this.resourceId + '/subscriptions').then(function (response) {
                 _this.user = response.data.user;
                 _this.plans = response.data.plans;
                 _this.subscriptions = response.data.subscriptions;
@@ -679,7 +679,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.loading = true;
 
             if (this.plan) {
-                axios.post('/nova-cashier-tool-api/user/' + this.resourceId + '/subscriptions/create', { plan: this.plan }).then(function (response) {
+                Nova.request().post('/nova-cashier-tool-api/user/' + this.resourceId + '/subscriptions/create', { plan: this.plan }).then(function (response) {
                     _this2.$toasted.show("Created successfully!", { type: "success" });
 
                     _this2.loadUserData();
@@ -982,7 +982,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         loadUserData: function loadUserData() {
             var _this = this;
 
-            axios.get('/nova-cashier-tool-api/user/' + this.userId + '/subscriptions/' + this.subscriptionId).then(function (response) {
+            Nova.request().get('/nova-cashier-tool-api/user/' + this.userId + '/subscriptions/' + this.subscriptionId).then(function (response) {
                 _this.user = response.data.user;
                 _this.subscription = response.data.subscriptions[0];
                 _this.cards = response.data.cards;
@@ -1007,7 +1007,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (do_refund == true) {
                 this.loading = true;
 
-                axios.post('/nova-cashier-tool-api/user/' + this.userId + '/refund/' + chargeId).then(function (response) {
+                Nova.request().post('/nova-cashier-tool-api/user/' + this.userId + '/refund/' + chargeId).then(function (response) {
                     _this2.$toasted.show("Refunded successfully!", { type: "success" });
 
                     _this2.loadUserData();
@@ -1028,7 +1028,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (do_cancel == true) {
                 this.loading = true;
 
-                axios.post('/nova-cashier-tool-api/user/' + this.userId + '/subscriptions/' + this.subscriptionId + '/cancel').then(function (response) {
+                Nova.request().post('/nova-cashier-tool-api/user/' + this.userId + '/subscriptions/' + this.subscriptionId + '/cancel').then(function (response) {
                     _this3.$toasted.show("Cancelled successfully!", { type: "success" });
 
                     _this3.loadUserData();
@@ -1047,7 +1047,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.loading = true;
 
-            axios.post('/nova-cashier-tool-api/user/' + this.userId + '/subscriptions/' + this.subscriptionId + '/resume').then(function (response) {
+            Nova.request().post('/nova-cashier-tool-api/user/' + this.userId + '/subscriptions/' + this.subscriptionId + '/resume').then(function (response) {
                 _this4.$toasted.show("Resumed successfully!", { type: "success" });
 
                 _this4.loadUserData();
@@ -1065,7 +1065,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.loading = true;
 
-            axios.post('/nova-cashier-tool-api/user/' + this.userId + '/subscriptions/' + this.subscriptionId + '/update', { plan: this.newPlan }).then(function (response) {
+            Nova.request().post('/nova-cashier-tool-api/user/' + this.userId + '/subscriptions/' + this.subscriptionId + '/update', { plan: this.newPlan }).then(function (response) {
                 _this5.$toasted.show("Updated successfully!", { type: "success" });
 
                 _this5.loadUserData();
