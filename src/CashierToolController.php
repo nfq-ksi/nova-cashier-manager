@@ -57,7 +57,7 @@ class CashierToolController extends Controller
     public function user($billableId, $subscriptionId = null)
     {
         /** @var \Laravel\Cashier\Billable|\App\Models\User $billable */
-        $billable = (new $this->stripeModel())->find($billableId);
+        $billable = (new $this->stripeModel)->find($billableId);
 
         // Get subscription(s)
         if (is_null($subscriptionId)) {
@@ -108,7 +108,7 @@ class CashierToolController extends Controller
     public function cancelSubscription(Request $request, $billableId, $subscriptionId)
     {
         /** @var \Laravel\Cashier\Billable|\App\Models\User $billable */
-        $billable = (new $this->stripeModel())->find($billableId);
+        $billable = (new $this->stripeModel)->find($billableId);
 
         $subscription = $billable->subscriptions()->find($subscriptionId);
 
@@ -144,7 +144,7 @@ class CashierToolController extends Controller
     public function updateSubscription(Request $request, $billableId, $subscriptionId)
     {
         /** @var \Laravel\Cashier\Billable|\App\Models\User $billable */
-        $billable = (new $this->stripeModel())->find($billableId);
+        $billable = (new $this->stripeModel)->find($billableId);
 
         $subscription = $billable->subscriptions()->find($subscriptionId);
 
@@ -162,7 +162,7 @@ class CashierToolController extends Controller
     public function resumeSubscription(Request $request, $billableId, $subscriptionId)
     {
         /** @var \Laravel\Cashier\Billable|\App\Models\User $billable */
-        $billable = (new $this->stripeModel())->find($billableId);
+        $billable = (new $this->stripeModel)->find($billableId);
 
         $subscription = $billable->subscriptions()->find($subscriptionId);
 
