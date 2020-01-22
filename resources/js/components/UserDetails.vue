@@ -245,9 +245,8 @@
                     <tr v-for="charge in charges">
                         <td><span class="whitespace-no-wrap text-left">{{charge.amount / 100}} {{charge.currency}}</span></td>
                         <td>
-                            <span class="whitespace-no-wrap text-left text-info" v-if="charge.amount_refunded === charge.amount">Full Refund </span>
-                            <span class="whitespace-no-wrap text-left text-info" v-if="charge.amount_refunded !== charge.amount && charge.amount_refunded > 0">Partial Refund ({{ charge.amount_refunded / 100 }} {{charge.currency}})</span>
-                            <span class="whitespace-no-wrap text-left text-success" v-if="charge.captured && !charge.amount_refunded">Successful</span>
+                            <span class="whitespace-no-wrap text-left" v-if="charge.amount_refunded">{{charge.amount_refunded / 100}} {{charge.currency}} Refunded</span>
+                            <span class="whitespace-no-wrap text-left text-success" v-if="charge.captured">Successful</span>
                             <span class="whitespace-no-wrap text-left text-danger" v-if="charge.failure_message">{{charge.failure_message}}</span>
                         </td>
                         <td><span class="whitespace-no-wrap text-left">{{charge.created}}</span></td>
@@ -279,9 +278,9 @@
                     </thead>
                     <tbody>
                     <tr v-for="card in cards">
-                        <td><span class="whitespace-no-wrap text-left">{{card.brand}}</span></td>
-                        <td><span class="whitespace-no-wrap text-left">**********{{card.last4}}</span></td>
-                        <td><span class="whitespace-no-wrap text-left">{{card.exp_month}}/{{card.exp_year}}</span></td>
+                        <td><span class="whitespace-no-wrap capitalize text-left"><i v-bind:class="'fab fa-cc-' + card.brand.replace(' ', '-').toLocaleLowerCase()"></i> {{card.brand}}</span></td>
+                        <td><span class="whitespace-no-wrap text-left">**** **** **** {{card.last4}}</span></td>
+                        <td><span class="whitespace-no-wrap text-left">{{card.exp_month}} / {{card.exp_year}}</span></td>
                     </tr>
                     </tbody>
                 </table>

@@ -61,20 +61,12 @@
 
 <template>
     <div class="card mb-6 py-3 px-6">
+        <div class="flex items-center mb-3"><h1 class="flex-no-shrink text-90 font-normal text-2xl">Manage Subscription</h1> </div>
+
         <loading-view :loading="loading">
             <div v-if="!subscriptions || subscriptions.length == 0">
                 <p class="text-90">
                     <em>User has no subscriptions.</em>
-                    <!-- <br/>
-                    <select v-model="plan" class="form-control form-select">
-                        <option value="" disabled="disabled" selected="selected">Choose Plan</option>
-                        <option :value="plan" v-for="plan in plans">
-                            {{ plan.nickname }} (${{ plan.price / 100 }})
-                        </option>
-                    </select><br/>
-                    <button @click="createSubscription()" :disabled="!plan" class="btn btn-default btn-primary inline-flex items-center relative ml-auto mr-3">
-                        Subscribe
-                    </button> -->
                 </p>
             </div>
             <div v-else>
@@ -106,9 +98,9 @@
                                 <span v-if="subscription.cancelled || subscription.cancel_at_period_end" class="text-danger">Cancelled</span>
                                 <span v-if="subscription.active && !subscription.cancelled && !subscription.cancel_at_period_end">Active</span>
                                 ·
-                                <router-link class="text-primary no-underline" :to="'/cashier-tool/user/'+resourceId+'/subscriptions/'+subscription.id">
+                                <a class="text-primary no-underline" :href="basePath+'/cashier-tool/user/'+resourceId">
                                     Manage
-                                </router-link>
+                                </a>
                             </p>
                         </div>
                     </div>
