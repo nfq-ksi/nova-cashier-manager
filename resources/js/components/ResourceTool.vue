@@ -78,8 +78,9 @@ export default {
                         <div class="flex border-b border-40" v-if="subscription">
                             <div class="w-1/4 py-4"><h4 class="font-normal text-80">Plan</h4></div>
                             <div class="w-3/4 py-4"><p class="text-90">
-                                {{ subscription.plan }}
+                                {{ subscription.plan_nickname }}
                                 ({{ subscription.plan_amount / 100 }} {{ subscription.plan_currency }} /
+                                {{ subscription.plan_interval_count }}
                                 {{ subscription.plan_interval }})
                             </p></div>
                         </div>

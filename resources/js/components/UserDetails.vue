@@ -153,7 +153,7 @@ export default {
                     <select v-model="newPlan" class="form-control form-select">
                         <option value="" disabled="disabled" selected="selected">Choose New Plan</option>
                         <option :value="plan.id" v-for="plan in plans">
-                            {{plan.nickname}} ({{plan.price / 100}} {{plan.currency}} / {{plan.interval}})
+                            {{plan.nickname}} ({{plan.price / 100}} {{plan.currency}} / {{plan.interval_count}} {{plan.interval}})
                         </option>
                     </select>
 
@@ -165,7 +165,7 @@ export default {
 
             <div class="flex border-b border-40" v-if="subscription">
                 <div class="w-1/4 py-4"><h4 class="font-normal text-80">Amount</h4></div>
-                <div class="w-3/4 py-4"><p class="text-90">{{subscription.plan_amount / 100}} ({{subscription.plan_currency}}) / {{subscription.plan_interval}}</p></div>
+                <div class="w-3/4 py-4"><p class="text-90">{{subscription.plan_amount / 100}} ({{subscription.plan_currency}}) / {{subscription.plan_interval_count}} {{subscription.plan_interval}}</p></div>
             </div>
 
             <div class="flex border-b border-40" v-if="subscription">

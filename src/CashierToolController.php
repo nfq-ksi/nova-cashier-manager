@@ -95,7 +95,7 @@ class CashierToolController extends Controller
             'invoices' => request('brief') ? [] : $this->formatInvoices($billable->invoicesIncludingPending()),
             'charges' => request('brief') ? [] : $this->formatPaymentIntents(PaymentIntent::all(['customer' => $billable->asStripeCustomer()->id])),
             'subscriptions' => $formattedSubscriptions,
-            'plans' => request('brief') ? [] : $this->formatPlans(Plan::all(['limit' => 100])),
+            'plans' => request('brief') ? [] : $this->formatPlans(Plan::all()),
         ];
     }
 
@@ -204,7 +204,9 @@ class CashierToolController extends Controller
         return array_merge($subscription->toArray(), [
             'plan_amount' => $stripeSubscription->plan->amount,
             'plan_interval' => $stripeSubscription->plan->interval,
+            'plan_interval_count' => $stripeSubscription->plan->interval_count,
             'plan_currency' => $stripeSubscription->plan->currency,
+            'plan_nickname' => $stripeSubscription->plan->nickname,
             'plan' => $subscription->stripe_plan,
             'stripe_plan' => $stripeSubscription->plan->id,
             'ended' => $subscription->ended(),
