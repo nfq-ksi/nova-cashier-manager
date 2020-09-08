@@ -37,9 +37,9 @@ class CashierToolController extends Controller
     public function __construct(Repository $config)
     {
         $this->middleware(function ($request, $next) use ($config) {
-            Stripe::setApiKey($config->get('services.stripe.secret'));
+            Stripe::setApiKey($config->get('cashier.secret'));
 
-            $this->stripeModel = $config->get('services.stripe.model');
+            $this->stripeModel = $config->get('cashier.model');
 
             $this->subscriptionName = $config->get('nova-cashier-manager.subscription_name');
 
@@ -91,7 +91,7 @@ class CashierToolController extends Controller
         // Return data
         return [
             'user' => $billable->toArray(),
-            'cards' => request('brief') ? [] : $this->formatPaymentMethods($billable->paymentMethods(), $billable->defaultPaymentMethod()->id),
+            'cards' => request('brief') ? [] : $this->formatPaymentMethods($billable->paymentMethods(), $billable->defaultPaymentMethod() ? $billable->defaultPaymentMethod()->id : []),
             'invoices' => request('brief') ? [] : $this->formatInvoices($billable->invoicesIncludingPending()),
             'charges' => request('brief') ? [] : $this->formatPaymentIntents(PaymentIntent::all(['customer' => $billable->asStripeCustomer()->id])),
             'subscriptions' => $formattedSubscriptions,

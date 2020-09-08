@@ -1,77 +1,77 @@
 <script type="text/ecmascript-6">
-    export default {
-        props: ['userId','subscriptionId'],
+export default {
+    props: ['userId','subscriptionId'],
 
 
-        data(){
-            return {
-                loading: true,
-                user: null,
-                subscription: null,
-                cards: [],
-                invoices: [],
-                charges: [],
-                plans: [],
-                newPlan: '',
+    data(){
+        return {
+            loading: true,
+            user: null,
+            subscription: null,
+            cards: [],
+            invoices: [],
+            charges: [],
+            plans: [],
+            newPlan: '',
+        }
+    },
+
+
+    mounted() {
+        this.loadUserData();
+    },
+
+
+    methods: {
+        /**
+         * Load the user data.
+         */
+        loadUserData(){
+            Nova.request().get('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId)
+                .then(response => {
+                    this.user = response.data.user;
+                    this.subscription = response.data.subscriptions[0];
+                    this.cards = response.data.cards;
+                    this.invoices = response.data.invoices;
+                    this.charges = response.data.charges;
+                    this.plans = response.data.plans;
+
+                    this.newPlan = this.subscription ? this.subscription.stripe_plan : null;
+
+                    this.loading = false;
+                });
+        },
+
+
+        /**
+         * Refund Charge.
+         */
+        refundCharge(chargeId){
+            var do_refund = confirm("Are you sure you want to refund this charge?");
+            if (do_refund == true) {
+                this.loading = true;
+
+                Nova.request().post(`/nova-cashier-tool-api/user/${this.userId}/refund/${chargeId}`)
+                    .then(response => {
+                        this.$toasted.show("Refunded successfully!", {type: "success"});
+
+                        this.loadUserData();
+                    })
+                    .catch(errors => {
+                        this.$toasted.show(errors.response.data.message, {type: "error"});
+                    });
             }
         },
 
+        /**
+         * Cancel subscription.
+         */
+        cancelSubscription(){
+            var do_cancel = confirm("Are you sure you want to cancel this subscription?");
+            if (do_cancel == true) {
+                this.loading = true;
 
-        mounted() {
-            this.loadUserData();
-        },
-
-
-        methods: {
-            /**
-             * Load the user data.
-             */
-            loadUserData(){
-                Nova.request().get('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId)
-                        .then(response => {
-                            this.user = response.data.user;
-                            this.subscription = response.data.subscriptions[0];
-                            this.cards = response.data.cards;
-                            this.invoices = response.data.invoices;
-                            this.charges = response.data.charges;
-                            this.plans = response.data.plans;
-
-                            this.newPlan = this.subscription ? this.subscription.stripe_plan : null;
-
-                            this.loading = false;
-                        });
-            },
-
-
-            /**
-             * Refund Charge.
-             */
-            refundCharge(chargeId){
-                var do_refund = confirm("Are you sure you want to refund this charge?");
-                if (do_refund == true) {
-                    this.loading = true;
-
-                    Nova.request().post(`/nova-cashier-tool-api/user/${this.userId}/refund/${chargeId}`)
-                        .then(response => {
-                            this.$toasted.show("Refunded successfully!", {type: "success"});
-
-                            this.loadUserData();
-                        })
-                        .catch(errors => {
-                            this.$toasted.show(errors.response.data.message, {type: "error"});
-                        });
-                }
-            },
-
-            /**
-             * Cancel subscription.
-             */
-            cancelSubscription(){
-                var do_cancel = confirm("Are you sure you want to cancel this subscription?");
-                if (do_cancel == true) {
-                    this.loading = true;
-
-                    Nova.request().post('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId+'/cancel')
+                Nova.request().post('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId+'/cancel')
                     .then(response => {
                         this.$toasted.show("Cancelled successfully!", {type: "success"});
 
@@ -80,17 +80,17 @@
                     .catch(errors => {
                         this.$toasted.show(errors.response.data.message, {type: "error"});
                     });
-                }
-            },
+            }
+        },
 
 
-            /**
-             * Resume subscription.
-             */
-            resumeSubscription(){
-                this.loading = true;
+        /**
+         * Resume subscription.
+         */
+        resumeSubscription(){
+            this.loading = true;
 
-                Nova.request().post('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId+'/resume')
+            Nova.request().post('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId+'/resume')
                 .then(response => {
                     this.$toasted.show("Resumed successfully!", {type: "success"});
 
@@ -99,16 +99,16 @@
                 .catch(errors => {
                     this.$toasted.show(errors.response.data.message, {type: "error"});
                 });
-            },
+        },
 
 
-            /**
-             * Update subscription.
-             */
-            updateSubscription(){
-                this.loading = true;
+        /**
+         * Update subscription.
+         */
+        updateSubscription(){
+            this.loading = true;
 
-                Nova.request().post('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId+'/update', {plan: this.newPlan})
+            Nova.request().post('/nova-cashier-tool-api/user/'+this.userId+'/subscriptions/'+this.subscriptionId+'/update', {plan: this.newPlan})
                 .then(response => {
                     this.$toasted.show("Updated successfully!", {type: "success"});
 
@@ -117,9 +117,9 @@
                 .catch(errors => {
                     this.$toasted.show(errors.response.data.message, {type: "error"});
                 });
-            }
         }
     }
+}
 </script>
 
 <template>
@@ -290,5 +290,5 @@
 </template>
 
 <style>
-    /* Scopes Styles */
+/* Scopes Styles */
 </style>
